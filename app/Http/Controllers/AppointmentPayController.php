@@ -48,15 +48,15 @@ class AppointmentPayController extends Controller
 
             // Handle successful payment
             // if ($paymentIntent->status === 'succeeded') {
-                // Update appointment status to paid
-                Appointment::query()
-                    ->where('id', $appointmentId)
-                    ->update([
-                        'status' => AppointmentStatusEnum::PAID,
-                    ]);
+            // Update appointment status to paid
+            Appointment::query()
+                ->where('id', $appointmentId)
+                ->update([
+                    'status' => AppointmentStatusEnum::PAID,
+                ]);
 
-                // Return success response
-                return response()->json(['status' => 'success', 'message' => 'Payment successful']);
+            // Return success response
+            return response()->json(['status' => 'success', 'message' => 'Payment successful']);
             // } else {
             //     // Handle other statuses like requires_action, requires_payment_method, etc.
             //     return response()->json(['status' => 'pending', 'message' => 'Payment requires further action']);

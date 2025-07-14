@@ -38,7 +38,7 @@ class AppointmentsConfirmRequest extends FormRequest
                 Rule::exists('appointments', 'id')->where(fn (Builder $query) => $query->where('doctor_id', $this->user()->id))
                     ->where('status', AppointmentStatusEnum::PAID),
             ],
-            "status" => [
+            'status' => [
                 'required',
                 Rule::in([
                     AppointmentStatusEnum::CONFIRMED->value,

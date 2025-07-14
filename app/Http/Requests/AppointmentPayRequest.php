@@ -41,7 +41,7 @@ class AppointmentPayRequest extends FormRequest
             'card_name' => 'required|string|max:255',
             'card_number' => 'required|string|size:16',
             'exp_month' => 'required|integer|between:1,12',
-            'exp_year' => 'required|integer|min:' . date('Y'),
+            'exp_year' => 'required|integer|min:'.date('Y'),
             'cvc' => 'required|string|size:3',
         ];
     }
