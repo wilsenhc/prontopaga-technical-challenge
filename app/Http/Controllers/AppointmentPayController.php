@@ -27,27 +27,27 @@ class AppointmentPayController extends Controller
 
         try {
             // Create a payment method with the card details
-            $paymentMethod = PaymentMethod::create([
-                'type' => 'card',
-                'card' => [
-                    'number' => $validated['card_number'],
-                    'exp_month' => $validated['exp_month'],
-                    'exp_year' => $validated['exp_year'],
-                    'cvc' => $validated['cvc'],
-                ],
-            ])->attach(['customer' => $request->user()->stripe_id ?? null]);
+            // $paymentMethod = PaymentMethod::create([
+            //     'type' => 'card',
+            //     'card' => [
+            //         'number' => $validated['card_number'],
+            //         'exp_month' => $validated['exp_month'],
+            //         'exp_year' => $validated['exp_year'],
+            //         'cvc' => $validated['cvc'],
+            //     ],
+            // ])->attach(['customer' => $request->user()->stripe_id ?? null]);
 
             // Create a payment intent with the amount and currency
-            $paymentIntent = \Stripe\PaymentIntent::create([
-                'amount' => 100,
-                'currency' => 'usd',
-                'payment_method' => $paymentMethod,
-                'confirmation_method' => 'manual',
-                'confirm' => true,
-            ]);
+            // $paymentIntent = \Stripe\PaymentIntent::create([
+            //     'amount' => 100,
+            //     'currency' => 'usd',
+            //     'payment_method' => $paymentMethod,
+            //     'confirmation_method' => 'manual',
+            //     'confirm' => true,
+            // ]);
 
             // Handle successful payment
-            if ($paymentIntent->status === 'succeeded') {
+            // if ($paymentIntent->status === 'succeeded') {
                 // Update appointment status to paid
                 Appointment::query()
                     ->where('id', $appointmentId)
@@ -57,10 +57,10 @@ class AppointmentPayController extends Controller
 
                 // Return success response
                 return response()->json(['status' => 'success', 'message' => 'Payment successful']);
-            } else {
-                // Handle other statuses like requires_action, requires_payment_method, etc.
-                return response()->json(['status' => 'pending', 'message' => 'Payment requires further action']);
-            }
+            // } else {
+            //     // Handle other statuses like requires_action, requires_payment_method, etc.
+            //     return response()->json(['status' => 'pending', 'message' => 'Payment requires further action']);
+            // }
         } catch (\Stripe\Exception\CardException $e) {
             // Handle card error
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
